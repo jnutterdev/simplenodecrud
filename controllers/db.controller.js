@@ -1,10 +1,3 @@
-/*
-POOL ARE YOUR CONFIGURATION OPTIONS FOR PSQL
-YOU"LL NEED TO PASS THE USER, HOST, DB, PWD, AND PORT.
-
-WHEN RUNNING YOUR QUERIES, YOU"LL PASS YOUR PSQL COMMANDS THROUGH 
-pool.query() 
-*/
 const Pool = require('pg').Pool;
 const pool = new Pool({
     user: 'john',
@@ -12,18 +5,20 @@ const pool = new Pool({
     database: 'api',
     password: 'password',
     port: 5432,
-})
-
+});
 
 
 
 // GET /  displayHome()
 
-
+exports.displayHome = (request, response) => {
+    response.render('../views/layouts/index');
+}
 
 // GET /users  getUsers()
 
-const getUsers = (request, response) => {
+exports.getUsers = (request, response) => {
+    response.render('../views/layouts/user');
     pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
         if (error) {
             throw error;
@@ -34,7 +29,7 @@ const getUsers = (request, response) => {
 
 // GET /users/:id  getUserById()  id=$1 is a placeholder instead of ?
 
-const getUserById = (request, response) => {
+exports.getUserById = (request, response) => {
     const id = parseInt(request.params.id)
 
     pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
@@ -47,7 +42,7 @@ const getUserById = (request, response) => {
 
 // POST users  createUser()
 
-const createUser = (request, response) => {
+exports.createUser = (request, response) => {
     const { name, email } = request.body;
 
 
@@ -61,7 +56,7 @@ const createUser = (request, response) => {
 
 // PUT /users/:id  updateUser()
 
-const updateUser = (request, response) => {
+exports.updateUser = (request, response) => {
     const id = parseInt(request.params.id);
     const { name, email } = request.body;
 
@@ -78,7 +73,7 @@ const updateUser = (request, response) => {
 
 // DELETE /users/:id  deleteUser()
 
-const deleteUser = (request, response) => {
+exports.deleteUser = (request, response) => {
     const id = parseInt(request.params.id);
 
     pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
@@ -87,12 +82,4 @@ const deleteUser = (request, response) => {
         }
         response.status(200).send(`User deleted with ID: ${id}`);
     })
-}
-
-module.exports = {
-    getUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser,
 }

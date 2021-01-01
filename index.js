@@ -1,30 +1,23 @@
 const express = require('express');
+const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
-const db = require('./queries');
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use(
-    bodyParser.urlencoded({
-        extended: true,
-    })
-)
+app.use(express.urlencoded({
+    extended: true
+}));
 
-app.get('/', (request, response) => {
-    response.json({ info: 'Node.js, Express, and Postgres API' });
-})
 
-/* 
-ROUTES TO REST API ENDPOINTS
-QUERIES.JS IS ESSENTIALLY THE CONTROLLER FILE
-*/
+// TEMPLATING ENGINE COMPONENTS
+const path = require('path');
+app.set('view options', { layout: './views/layouts/index' });
+app.set('view engine', 'ejs');
 
-app.get('/users', db.getUsers);
-app.get('/users/:id', db.getUserById);
-app.post('/users', db.createUser);
-app.put('/users/:id', db.updateUser);
-app.delete('/users/:id', db.deleteUser);
+
+
+const routes = require('./routes/routes');
+app.get('/', routes);
 
 
 app.listen(port, () => {
