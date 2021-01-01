@@ -15,9 +15,8 @@ app.set('view options', { layout: './views/layouts/index' });
 app.set('view engine', 'ejs');
 
 
-
 const routes = require('./routes/routes');
-app.get('/', routes);
+app.use('/', routes);
 
 
 app.listen(port, () => {

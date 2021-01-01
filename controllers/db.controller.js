@@ -17,28 +17,42 @@ exports.displayHome = (request, response) => {
 
 // GET /users  getUsers()
 
-exports.getUsers = (request, response) => {
-    response.render('../views/layouts/user');
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json(results.rows);
-    })
+exports.getUsers = async(request, response) => {
+
+    try {
+
+        const results = await pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json(results.rows);
+            // response.render('../views/layouts/user');
+        })
+
+    } catch (err) {
+        return next(err);
+    }
 }
 
 // GET /users/:id  getUserById()  id=$1 is a placeholder instead of ?
 
-exports.getUserById = (request, response) => {
-    const id = parseInt(request.params.id)
+exports.getUserById = async(request, response) => {
+    const id = parseInt(request.params.id);
 
-    pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json(results.rows);
-    })
+    try {
+        const results = await pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json(results.rows);
+        })
+
+    } catch (err) {
+        return next(err);
+    }
 }
+
+
 
 // POST users  createUser()
 
