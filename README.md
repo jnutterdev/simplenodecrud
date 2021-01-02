@@ -5,5 +5,5 @@ The focus of this project is to learn how to interact with CRUD options using Ex
 
 #### Need to fix:
 - The POST user response doesn't include the id of the user created
-- Add in EJS templating language
-- Move routes to routes file, controllers to controller file
+- Setup routes for Update and Delete users
+- Put app behind user authentication
