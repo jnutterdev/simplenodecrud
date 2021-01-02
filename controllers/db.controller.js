@@ -70,7 +70,8 @@ exports.createUser = (request, response) => {
             if (error) {
                 throw error;
             }
-            response.render('../views/partials/useradded', { user: `${name}` });
+            // response.render('../views/partials/useradded', { user: `${name}` });
+            response.redirect('/users');
         })
     } catch (err) {
         return next(err);
@@ -81,20 +82,17 @@ exports.createUser = (request, response) => {
 
 // PUT /users/:id  updateUser()
 
-
-
 exports.updateUser = (request, response) => {
-
+    const id = parseInt(request.params.id);
+    const { name, email } = request.body;
     try {
-        const id = parseInt(request.params.id);
-        const { name, email } = request.body;
-        pool.query(
+        const results = pool.query(
             'UPDATE users SET name = $1, email = $2 WHERE id = $3', [name, email, id],
             (error, results) => {
                 if (error) {
                     throw error;
                 }
-                response.render('../views/partials/userupdated');
+                response.render('../views/partials/userupdated', { name: `${name}`, email: `${email}` });
             }
         )
     } catch (err) {
@@ -103,7 +101,35 @@ exports.updateUser = (request, response) => {
 
 }
 
+exports.userUpdateConfirm = async(request, response) => {
+    const id = parseInt(request.params.id);
+    const { name, email } = request.body;
+    try {
+
+        const results = await pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.render('../views/partials/updateuser', { name: `${name}`, email: `${email}` });
+        })
+
+    } catch (err) {
+        return next(err);
+    }
+
+
+}
+
+
+
 // DELETE /users/:id  deleteUser()
+
+exports.deleteConfirm = async(request, response) => {
+
+
+    await response.render('../views/partials/deleteuser')
+}
+
 
 exports.deleteUser = (request, response) => {
 
@@ -114,7 +140,7 @@ exports.deleteUser = (request, response) => {
             if (error) {
                 throw error;
             }
-            response.status(200).send(`User deleted with ID: ${id}`);
+            response.render('../views/partials/userdeleted');
         })
 
     } catch (err) {

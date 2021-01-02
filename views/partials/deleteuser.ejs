@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        Are you sure you want to delete <%= user %>?
+    </div>
+    <form action="/users/<%= item.id %>" method="POST">    
+    <button><a href="/users/<%= item.id %>">Go back</a></button>
+    </form>
+    <button><a href="/users">Go back</a></button>
+</div>

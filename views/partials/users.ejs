@@ -10,8 +10,12 @@
                 <p class="card-text">
                     <%= item.email %>
                 </p>
-                <a href="/users/<%= item.id %>" class="btn btn-primary" id="update-button">Edit</a>
-                <a href="/users/<%= item.id %>" class="btn btn-primary" id="delete-button">Delete</a>
+                <form action="/user-profile/<%= item.id %>?name=<%= item.name %>&email=<%= item.email %>" method="get">
+                    <button type="submit" class="btn btn-primary">Edit user</button>
+                </form>
+                <form action="/delete-user/<%= item.id %>" method="post">
+                    <button type="submit" class="btn btn-primary">Delete user</button>
+                </form>
             </div>
         </div>
     </div>

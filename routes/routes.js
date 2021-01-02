@@ -10,10 +10,14 @@ router.get('/users/:id', dbLookup.getUserById);
 
 router.get('/new-user', dbLookup.newUser);
 
+router.get('/update-user/:id', dbLookup.userUpdateConfirm);
+
+router.get('/delete-user', dbLookup.deleteConfirm);
+
 router.post('/users', dbLookup.createUser);
 
-router.put('/users/:id', dbLookup.updateUser);
+// router.put('/update-user/:id', dbLookup.updateUser);
 
-router.delete('/users/:id', dbLookup.deleteUser);
+router.delete('/delete-user/:id', dbLookup.deleteUser);
 
 module.exports = router;
