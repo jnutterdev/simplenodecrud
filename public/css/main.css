@@ -1,0 +1,13 @@
+body {
+    background-color: lightblue;
+}
+
+.card-group>.card {
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    margin: 20px auto;
+}
+
+.footer {
+    margin-top: 100px;
+}

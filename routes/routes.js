@@ -8,6 +8,8 @@ router.get('/users', dbLookup.getUsers);
 
 router.get('/users/:id', dbLookup.getUserById);
 
+router.get('/new-user', dbLookup.newUser);
+
 router.post('/users', dbLookup.createUser);
 
 router.put('/users/:id', dbLookup.updateUser);
