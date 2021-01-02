@@ -1,0 +1,18 @@
+<button><a href="/new-user">Add a new user</a></button>
+
+<% users.forEach(function(item){ %>
+    <div class="card-group">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= item.name %>
+                </h5>
+                <p class="card-text">
+                    <%= item.email %>
+                </p>
+                <a href="/users/<%= item.id %>" class="btn btn-primary" id="update-button">Edit</a>
+                <a href="/users/<%= item.id %>" class="btn btn-primary" id="delete-button">Delete</a>
+            </div>
+        </div>
+    </div>
+    <% }) %>
