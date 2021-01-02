@@ -4,6 +4,6 @@ The focus of this project is to learn how to interact with CRUD options using Ex
 
 
 #### Need to fix:
-- The POST user response doesn't include the id of the user created
+- Need to be able to create database automatically (currently db, user, and table needs to be created manually )
 - Setup routes for Update and Delete users
 - Put app behind user authentication
