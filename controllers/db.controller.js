@@ -12,7 +12,7 @@ const pool = new Pool({
 // GET /  displayHome()
 
 exports.displayHome = async(request, response) => {
-    await response.render('./partials/content');
+    await response.render('./partials/home');
 }
 
 // GET /users  getUsers()
@@ -26,7 +26,7 @@ exports.getUsers = async(request, response) => {
                 throw error;
             }
             // response.status(200).json(results.rows);
-            response.render('./partials/content', { users: results.rows });
+            response.render('./partials/users', { users: results.rows });
         })
 
     } catch (err) {
@@ -70,7 +70,7 @@ exports.createUser = (request, response) => {
             if (error) {
                 throw error;
             }
-            response.status(201).send(`User added with ID: ${results.id}`);
+            response.render('../views/partials/useradded', { user: `${name}` });
         })
     } catch (err) {
         return next(err);
@@ -88,14 +88,13 @@ exports.updateUser = (request, response) => {
     try {
         const id = parseInt(request.params.id);
         const { name, email } = request.body;
-
         pool.query(
             'UPDATE users SET name = $1, email = $2 WHERE id = $3', [name, email, id],
             (error, results) => {
                 if (error) {
                     throw error;
                 }
-                response.status(200).send(`User modified with ID: ${id}`);
+                response.render('../views/partials/userupdated');
             }
         )
     } catch (err) {
